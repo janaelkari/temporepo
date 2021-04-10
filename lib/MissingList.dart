@@ -1,107 +1,75 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appretry/missing.dart';
+import 'package:provider/provider.dart';
 
-class MissingList extends StatelessWidget{
+import 'detail.dart';
+import 'missing_notifier.dart';
+
+class MissingList extends StatefulWidget {
+  _PeopleState createState() => _PeopleState();
+
+
+}
+
+class _PeopleState extends State<MissingList> {
+  @override
+  void initState() {
+    Notifier xNotifier = Provider.of<Notifier>(context, listen: false);
+    getpeople(xNotifier);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text("Ziad"),
-          subtitle: Text("hamra street"),
-          trailing: Icon(Icons.check_circle),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI"),
-          ),),
-        ListTile(
-
-          title: Text("Jana Kanafani "),
-          subtitle: Text("bliss street"),
-          trailing: Icon(Icons.check_circle),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://www.newzealand.com/assets/Tourism-NZ/Tiaki/9052a21e4c/Tiaki_Hero_Thumbnail_v1__aWxvdmVrZWxseQo_FocalPointCropWzQyMCw0MjAsNTAsNTAsNzUsImpwZyIsNjUsMi41XQ.jpg"),
-          ),
+    Notifier xNotifier = Provider.of<Notifier>(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('LIST'),
         ),
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmFoPF5cPREM9B0RM5HmjjCT26b9FlcSiKA&usqp=CAU"),
-          ),
-          title: Text("Jana Husseini"),
-          subtitle: Text("1st street"),
-        ),
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://www.zohowebstatic.com/sites/default/files/people/ashish-vikram.jpg"),
-          ),
-          title: Text("Ahmad Ghandour"),
-          subtitle: Text("nabatiyeh street"),
-          trailing: Icon(Icons.check_circle),
-        ),
-        ListTile(
+        body: ListView.separated(
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              leading : Image.network("https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc"
+                // xNotifier.missingList[index].image,
+                // width: 120,
+                // fit: BoxFit.fitWidth,
+              ),
+              title: Text(xNotifier.missingList[index].name),
+              subtitle: Text(xNotifier.missingList[index].adress),
+              onTap: (){
+                xNotifier.currentmissing = xNotifier.missingList[index];
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder :(BuildContext context){
+                      return MissingDetail();
+                    })
+                );
+              },
+            );
+          },
+          itemCount: xNotifier.missingList.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              color: Colors.black,
+            );
+          },
 
-          title: Text("Iyad"),
-          subtitle: Text("2nd street street"),
-          trailing: Icon(Icons.check_circle),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://wordstream-files-prod.s3.amazonaws.com/s3fs-public/pictures/picture-38061-1459177084.jpg"),
-          ),
-        ),
-        ListTile(
 
-            title: Text("Jane"),
-            subtitle: Text("beirut"),
-            trailing: Icon(Icons.check_circle),
-            leading: CircleAvatar(
-              //backgroundColor: Colors.red,
-              backgroundImage: NetworkImage("https://coda.newjobs.com/api/imagesproxy/ms/cms/content30/images/people-pleaser.png"),
-            )
-        ),
-        ListTile(
+        ));
+  }}
 
-            title: Text("Ihab Ali"),
-            subtitle: Text("mar elias"),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage("https://assets.themuse.com/uploaded/companies/1309/module_persons/3020.jpg?v=58b723e902db86d853228113ac137d40d267374d4dd91417930270e854d89ca6"),
-            )
-        ),
-        ListTile(
+getpeople(Notifier xNotifier) async {   //await is like future, since firestore is in the cloud so its as if we are getting the data from the internet, we have to wait
+  QuerySnapshot snapshot = await Firestore.instance
+      .collection('m')
+      .getDocuments();
 
-          title: Text("Saad Wehbe"),
-          subtitle: Text("nabatiyeh street"),
-          trailing: Icon(Icons.check_circle),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://e7.pngegg.com/pngimages/551/467/png-clipart-businessperson-small-business-business-plan-advertising-business-service-people.png"),
-          ),
-        ),
-        ListTile(
+  List<missing> _pList = [];
 
-            title: Text("Lynn Jaber"),
-            subtitle: Text("4th street"),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage("https://media.istockphoto.com/photos/young-woman-portrait-in-the-city-picture-id1009749608?k=6&m=1009749608&s=612x612&w=0&h=ckLkBgedCLmhG-TBvm48s6pc8kBfHt7Ppec13IgA6bo="),
-            )
+  snapshot.documents.forEach((document) { //traverse the document
+    missing p = missing.fromMap(document.data); //doc.data is a map //transformed this doc to the missing class obj
+    //data is the json file (fields of the doc)
+    _pList.add(p);
+  });
 
-        ),
-        ListTile(
-          //leading: CircleAvatar(
-          //backgroundImage: AssetImage(""),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://assets.themuse.com/uploaded/companies/1309/module_persons/3020.jpg?v=58b723e902db86d853228113ac137d40d267374d4dd91417930270e854d89ca6"),
-          ),
-          title: Text("Omar Abboud"),
-          subtitle: Text("nabatiyeh street"),
-
-          //
-
-        ),
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage("https://s.abcnews.com/images/GMA/191211_gma_thunberg1_hpMain_16x9_992.jpg"),
-          ),
-          title: Text("Souad Awad"),
-          subtitle: Text("nabatiyeh street"),
-          trailing: Icon(Icons.check_circle),
-        )
-      ],
-    );
-  }
+  xNotifier.missingList = _pList;
 }

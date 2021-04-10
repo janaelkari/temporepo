@@ -14,12 +14,16 @@ import 'package:provider/provider.dart';
 import 'Authentication/Wrapper.dart';
 import 'Authentication/auth.dart';
 import 'Authentication/user.dart';
+import 'missing_notifier.dart';
 
-void main() => runApp(MaterialApp(
-      theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.white),
-      debugShowCheckedModeBanner: false,
-      home: MyApp(),
-    ));
+void main() => runApp(MultiProvider(
+  providers: [
+    ChangeNotifierProvider(
+      create: (context) => Notifier(),
+    ),
+  ],
+  child: MyApp(),
+));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -27,19 +31,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
-    value: AuthService().user,
-     child: MaterialApp(
-      title: 'Flutter Demo',
-      routes: {
-        '/about': (context) => AboutScreen(),
-        "/contact": (context) => ContactScreen(),
-        "/Add_A_Missing": (context) => Add_missing(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+      value: AuthService().user,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        routes: {
+          '/about': (context) => AboutScreen(),
+          "/contact": (context) => ContactScreen(),
+          "/Add_A_Missing": (context) => Add_missing(),
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.red,
 
-      ),
-      home: Wrapper(),
+        ),
+        home: Wrapper(),
       ),
     );
   }
@@ -69,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-      (Timer timer) {
+          (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
