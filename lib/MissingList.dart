@@ -8,8 +8,6 @@ import 'missing_notifier.dart';
 
 class MissingList extends StatefulWidget {
   _PeopleState createState() => _PeopleState();
-
-
 }
 
 class _PeopleState extends State<MissingList> {
@@ -27,49 +25,58 @@ class _PeopleState extends State<MissingList> {
         appBar: AppBar(
           title: Text('LIST'),
         ),
-        body: ListView.separated(
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              leading : Image.network("https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc"
-                // xNotifier.missingList[index].image,
-                // width: 120,
-                // fit: BoxFit.fitWidth,
-              ),
-              title: Text(xNotifier.missingList[index].name),
-              subtitle: Text(xNotifier.missingList[index].adress),
-              onTap: (){
-                xNotifier.currentmissing = xNotifier.missingList[index];
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder :(BuildContext context){
-                      return MissingDetail();
-                    })
-                );
-              },
-            );
+        body: RefreshIndicator(
+          onRefresh: () {
+            return getpeople(xNotifier);
           },
-          itemCount: xNotifier.missingList.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: Colors.black,
-            );
-          },
-
-
+          child: ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                leading: Image.network(
+                    xNotifier.missingList[index].image != null
+                        ? xNotifier.missingList[index].image
+                        : "https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc"
+                    // xNotifier.missingList[index].image,
+                    // width: 120,
+                    // fit: BoxFit.fitWidth,
+                    ),
+                title: Text(xNotifier.missingList[index].name),
+                subtitle: Text(xNotifier.missingList[index].adress),
+                onTap: () {
+                  xNotifier.currentmissing = xNotifier.missingList[index];
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return MissingDetail();
+                  }));
+                },
+              );
+            },
+            itemCount: xNotifier.missingList.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider(
+                color: Colors.black,
+              );
+            },
+          ),
         ));
-  }}
+  }
+}
 
-getpeople(Notifier xNotifier) async {   //await is like future, since firestore is in the cloud so its as if we are getting the data from the internet, we have to wait
-  QuerySnapshot snapshot = await Firestore.instance
-      .collection('m')
-      .getDocuments();
+Future<void> getpeople(Notifier xNotifier) async {
+  //await is like future, since firestore is in the cloud so its as if we are getting the data from the internet, we have to wait
+  QuerySnapshot snapshot =
+      await Firestore.instance.collection('m').getDocuments();
 
   List<missing> _pList = [];
 
-  snapshot.documents.forEach((document) { //traverse the document
-    missing p = missing.fromMap(document.data); //doc.data is a map //transformed this doc to the missing class obj
+  snapshot.documents.forEach((document) {
+    //traverse the document
+    missing p = missing.fromMap(document
+        .data); //doc.data is a map //transformed this doc to the missing class obj
     //data is the json file (fields of the doc)
     _pList.add(p);
   });
 
   xNotifier.missingList = _pList;
+  return;
 }
