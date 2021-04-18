@@ -8,6 +8,8 @@ class missing {
   String nameofmissing;
   String phone;
   String image;
+  String reward;
+  String city;
 
 
   missing.fromMap(Map<String, dynamic> data) {
@@ -17,7 +19,8 @@ class missing {
     lastseen = data['lastseen'];
     phone = data['phone'];
     image = data['image'];
-    nameofmissing = data['nameofmissing'];
+    city = data['city'];
+    reward = data['reward'];
 
   }
 

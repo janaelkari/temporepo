@@ -12,11 +12,12 @@ class Add_missing extends StatefulWidget {
 
 class _Add_missingState extends State<Add_missing> {
   final _firestore = Firestore.instance;
-  String textname;
-  String adressname;
-  String phonenum;
-  String agenum;
-  String nofm;
+  String reward;
+  String name;
+  String adress;
+  String phone;
+  String age;
+  String city;
   String ls;
   File imageFile;
   String Filename;
@@ -108,7 +109,7 @@ class _Add_missingState extends State<Add_missing> {
                           labelText: "Full Name of missing"
                       ),
                       onChanged: (value) {
-                        textname = value;
+                        name = value;
                       },
                     ),
                   ),
@@ -125,7 +126,7 @@ class _Add_missingState extends State<Add_missing> {
                           labelText: " Age of missing"),
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
-                        adressname  = value;
+                        age  = value;
                       },
                     ),
                   ),
@@ -134,7 +135,7 @@ class _Add_missingState extends State<Add_missing> {
                     child: new TextFormField(
                       validator: validateNumber,
                       onChanged: (value) {
-                        phonenum = value;
+                        phone = value;
                       },
                       decoration: new InputDecoration(
                         prefixIcon: Icon(Icons.phone),
@@ -152,7 +153,7 @@ class _Add_missingState extends State<Add_missing> {
                     child: new TextFormField(
                       validator: validateCity,
                       onChanged: (value) {
-                        nofm = value;
+                        city = value;
                       },
                       decoration: new InputDecoration(
                           prefixIcon: Icon(Icons.location_city),
@@ -168,10 +169,10 @@ class _Add_missingState extends State<Add_missing> {
                     child: new TextFormField(
                       validator: validateAddress,
                       onChanged: (value) {
-                        agenum = value;
+                        adress = value;
                       },
                       decoration: new InputDecoration(
-                          prefixIcon: Icon(Icons.location_on_rounded),
+                          prefixIcon: Icon(Icons.account_balance),
 
                           border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
@@ -200,6 +201,9 @@ class _Add_missingState extends State<Add_missing> {
                   buildCheckbox(),
                   value
                       ? TextFormField(
+                    onChanged: (value){
+                      reward = value;
+                    },
                            validator: validateAmount ,
                           decoration: new InputDecoration(
                               prefixIcon: Icon(Icons.attach_money),
@@ -226,13 +230,14 @@ class _Add_missingState extends State<Add_missing> {
                       if (_formKey.currentState.validate()) {
                         String url = await uploadImage();
                         _firestore.collection('m').add({
-                          'name': textname,
-                          'adress': adressname,
-                          'phone': phonenum,
-                          'age': agenum,
+                          'name': name,
+                          'adress': adress,
+                          'phone': phone,
+                          'age': age,
                           'image':url,
-                          'nameofmissing': nofm,
+                          'city': city,
                           'lastseen': ls,
+                          'reward': reward,
                         });
 
                       } else {
