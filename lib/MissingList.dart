@@ -36,9 +36,7 @@ class _PeopleState extends State<MissingList> {
                     xNotifier.missingList[index].image != null
                         ? xNotifier.missingList[index].image
                         : "https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc"
-                    // xNotifier.missingList[index].image,
-                    // width: 120,
-                    // fit: BoxFit.fitWidth,
+
                     ),
                 title: Text(xNotifier.missingList[index].name),
                 subtitle: Text(xNotifier.missingList[index].adress),

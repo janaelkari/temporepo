@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_appretry/Add_Missing.dart';
+import 'package:flutter_appretry/Privacy%20Policy.dart';
 import 'package:flutter_appretry/SpalshScreen.dart';
 import 'package:flutter_appretry/about_screen.dart';
-import 'package:flutter_appretry/SettingScreen.dart';
+import 'package:flutter_appretry/Terms_and_conditions.dart';
 import 'package:flutter_appretry/MissingList.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +37,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         routes: {
           '/about': (context) => AboutScreen(),
-          "/contact": (context) => ContactScreen(),
+          "/terms": (context) => Terms(),
           "/Add_A_Missing": (context) => Add_missing(),
+          '/privacy':(context) => PrivacyPolicy(),
         },
         theme: ThemeData(
           primarySwatch: Colors.red,
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             UserAccountsDrawerHeader(
               accountName: Text('Missing People'),
-              accountEmail: Text("MissingPeopleTeam@gmail.com"),
+              accountEmail: Text("missingpeopleteam1@gmail.com"),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: NetworkImage(
@@ -146,9 +148,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text("Settings"),
+              title: Text("Terms and Conditions"),
               onTap: () {
-                Navigator.of(context).pushNamed("/contact");
+                Navigator.of(context).pushNamed("/terms");
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.all_inbox_sharp),
+              title: Text("Privacy Policy"),
+              onTap: () {
+                Navigator.of(context).pushNamed("/privacy");
               },
             ),
           ],

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 
 
-class ContactScreen extends StatefulWidget {
+class Terms extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ContactScreenState();
+    return _Terms();
   }
 }
 
-class _ContactScreenState extends State<ContactScreen> {
+class _Terms extends State<Terms> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text(" App Settings "),
+        title: Text(" Terms and Conditions "),
       ),
     );
   }
