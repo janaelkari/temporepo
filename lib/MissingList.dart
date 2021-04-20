@@ -39,7 +39,7 @@ class _PeopleState extends State<MissingList> {
 
                     ),
                 title: Text(xNotifier.missingList[index].name),
-                subtitle: Text(xNotifier.missingList[index].adress),
+                subtitle: Text(xNotifier.missingList[index].city),
                 onTap: () {
                   xNotifier.currentmissing = xNotifier.missingList[index];
                   Navigator.of(context)
@@ -53,6 +53,7 @@ class _PeopleState extends State<MissingList> {
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
                 color: Colors.black,
+                thickness: 1,
               );
             },
           ),

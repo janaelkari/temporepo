@@ -12,7 +12,7 @@ class Add_missing extends StatefulWidget {
 
 class _Add_missingState extends State<Add_missing> {
   final _firestore = Firestore.instance;
-  String reward;
+  var reward = "-";
   String name;
   String adress;
   String phone;
@@ -23,7 +23,7 @@ class _Add_missingState extends State<Add_missing> {
   String Filename;
 
   _openGallery(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery,maxHeight:350,maxWidth: 350);
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery,maxHeight:500,maxWidth: 500);
     this.setState(() {
       imageFile = picture;
       Filename = basename(imageFile.path);
@@ -32,7 +32,7 @@ class _Add_missingState extends State<Add_missing> {
   }
 
   _openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera,maxHeight:350,maxWidth: 350);
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera,maxHeight:500,maxWidth: 500);
     this.setState(() {
       imageFile = picture;
       Filename = basename(imageFile.path);
@@ -81,7 +81,7 @@ class _Add_missingState extends State<Add_missing> {
 ////////////////////////////////////////////////////////////////////////////////
   final _formKey = GlobalKey<FormState>();
   bool _validate = false;
-  bool value = false;
+  bool checkValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +199,7 @@ class _Add_missingState extends State<Add_missing> {
                     ),
                   ),
                   buildCheckbox(),
-                  value
+                  checkValue
                       ? TextFormField(
                     onChanged: (value){
                       reward = value;
@@ -225,29 +225,44 @@ class _Add_missingState extends State<Add_missing> {
                     },
                     child: Text("Upload Image"),
                   ),
-                  RaisedButton(
-                    onPressed: () async{
-                      if (_formKey.currentState.validate()) {
-                        String url = await uploadImage();
-                        _firestore.collection('m').add({
-                          'name': name,
-                          'adress': adress,
-                          'phone': phone,
-                          'age': age,
-                          'image':url,
-                          'city': city,
-                          'lastseen': ls,
-                          'reward': reward,
-                        });
+                  SizedBox(
+                    height: 60,
+                    width: 350,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton(
+                        color: Colors.red,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)) ,
+                      onPressed: () async{
+                          if (_formKey.currentState.validate()) {
+                            String url = await uploadImage();
+                            _firestore.collection('m').add({
+                              'name': name,
+                              'adress': adress,
+                              'phone': phone,
+                              'age': age,
+                              'image':url,
+                              'city': city,
+                              'lastseen': ls,
+                              'reward': reward,
+                            });
+                            submitted(context);
 
-                      } else {
-                        setState(() {
-                          _validate = true;
-                        });
-                      }
-                    },
-                    child: Text("Submit"),
-                    color: Colors.red,
+                          } else {
+                            setState(() {
+                              _validate = true;
+                            });
+                          }
+                        },
+                        child: Text("Submit",
+                         style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ]),
               ),
@@ -324,11 +339,35 @@ class _Add_missingState extends State<Add_missing> {
   Widget buildCheckbox() => CheckboxListTile(
         title: Text("Choose to add a reward"),
         //secondary: Icon(Icons.attach_money),
-        value: value,
+        value: checkValue,
         onChanged: (value) {
           setState(() {
-            this.value = value;
+            this.checkValue = value;
           });
         },
       );
+
+  void submitted(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: (){
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+
+      },
+    );
+    var alertDialog =  AlertDialog(
+      title: Text("Your post has been added successfully"),
+      content: Text("Refresh the list to check your post") ,
+
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
+  }
 }
