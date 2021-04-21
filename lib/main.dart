@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.all_inbox_sharp),
+              leading: Icon(Icons.all_inclusive),
               title: Text("Privacy Policy"),
               onTap: () {
                 Navigator.of(context).pushNamed("/privacy");

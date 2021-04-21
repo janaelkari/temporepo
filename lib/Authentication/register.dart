@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.red[300],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.red,
         actions: <Widget>[
@@ -49,14 +49,19 @@ class _RegisterState extends State<Register> {
             child: Column(
               children:<Widget>[
                 SizedBox(height:20.0),
+                imagee(),
+                SizedBox(height:20.0),
                 TextFormField(
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                    ),
+                    prefixIcon: Icon(Icons.person),
                     hintText: 'Email',
                     fillColor: Colors.white,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white , width: 2.0)
-                    ),
+
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red , width: 2.0)
                     ),
@@ -69,12 +74,15 @@ class _RegisterState extends State<Register> {
                 SizedBox(height:20.0),
                 TextFormField(
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(30))
+                    ),
+                    prefixIcon: Icon(Icons.lock),
                     hintText: 'Password',
                     fillColor: Colors.white,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white , width: 2.0)
-                    ),
+
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red , width: 2.0)
                     ),
@@ -85,11 +93,16 @@ class _RegisterState extends State<Register> {
                     setState(()=> password = val);
                   },
                 ),
-                SizedBox(height:20.0),
-                RaisedButton(
-                  color: Colors.red,
+
+                Expanded(
+                  child: SizedBox(height:5.0),
+                ),
+                Expanded(
+                  child: RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.red[800],
                   child : Text(
-                    'Register',
+                    'CREATE ACCOUNT',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
@@ -105,13 +118,46 @@ class _RegisterState extends State<Register> {
                     }
                   },
                 ),
-                SizedBox(height: 20,),
-                Text(error,
-                  style: TextStyle(color: Colors.red, fontSize: 14.0)  ,)
+                ),
+                Expanded(
+                  child: SizedBox(height: 20,
+                  ),
+                ),
+                Expanded(
+                  child:Text('Already have an account?',
+                  style: TextStyle( fontSize: 20.0,
+                    color: Colors.red,
+                  ),
+                ),
+                ),
+                Expanded(
+                  child:FlatButton(
+                  child: Text('Sign In',
+                    style: TextStyle( fontSize: 20.0,
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                  onPressed: (){
+                    widget.toggleView();
+                  },
+                ),
+                ),
+                Expanded(
+                  child: Text(error,
+                  style: TextStyle(color: Colors.red, fontSize: 0)  ,),
+                ),
               ],
             ),
           )
       ),
-    );;
+    );
+  }
+}
+class imagee extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    AssetImage assetImage = AssetImage('images/Logo.jpg');
+    Image image = Image(image: assetImage, width: 200, height: 200,);
+    return Container(child: image, );
   }
 }

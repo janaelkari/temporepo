@@ -27,7 +27,7 @@ class _SignINState extends State<SignIN> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() :  Scaffold(
-      backgroundColor: Colors.red[300],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.red,
         actions: <Widget>[
@@ -43,20 +43,25 @@ class _SignINState extends State<SignIN> {
         title: Text("Sign In To Missing People "),
       ),
       body: Container(
+
           padding: EdgeInsets.symmetric(vertical: 20.0 ,horizontal: 50.0),
           child:Form(
             key: _formkey,
             child: Column(
               children:<Widget>[
                 SizedBox(height:20.0),
+                imagee(),
+                SizedBox(height:20.0),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Email',
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                    hintText:  'Email',
                     fillColor: Colors.white,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white , width: 2.0)
-                    ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red , width: 2.0)
                     ),
@@ -69,12 +74,14 @@ class _SignINState extends State<SignIN> {
                 SizedBox(height:20.0),
                 TextFormField(
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(30))
+                    ),
+                    prefixIcon: Icon(Icons.lock),
                     hintText: 'Password',
                     fillColor: Colors.white,
                     filled: true,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white , width: 2.0)
-                    ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red , width: 2.0)
                     ),
@@ -85,11 +92,15 @@ class _SignINState extends State<SignIN> {
                     setState(()=> password = val);
                   },
                 ),
-                SizedBox(height:20.0),
-                RaisedButton(
-                    color: Colors.red,
+                Expanded(
+                  child:SizedBox(height:5.0),
+                  ),
+                Expanded(
+                  child:RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.red[800],
                     child : Text(
-                      'Sign In',
+                      'SIGN IN',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
@@ -106,14 +117,48 @@ class _SignINState extends State<SignIN> {
                       }
                     }
                 ),
-                SizedBox(height: 20,),
-                Text(error,
+                ),
+                Expanded(
+                  child: SizedBox(height: 5.0,
+                  ),
+                ),
+                Expanded(
+                  child:Text('Dont have an account?',
+                  style: TextStyle( fontSize: 20.0,
+                    color: Colors.red,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: FlatButton(
+                  child: Text('Create',
+                    style: TextStyle( fontSize: 20.0,
+                      color: Colors.orangeAccent,
+                    ),
+
+                  ),
+                  onPressed: (){
+                    widget.toggleView();
+                  },
+                ),
+                ),
+                Expanded(
+                  child:Text(error,
                   style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  ),
                 ),
               ],
             ),
           )
       ),
     );
+  }
+}
+class imagee extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    AssetImage assetImage = AssetImage('images/Logo.jpg');
+    Image image = Image(image: assetImage, width: 200, height: 200,);
+    return Container(child: image, );
   }
 }
