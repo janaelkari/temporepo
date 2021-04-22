@@ -24,8 +24,8 @@ class MissingDetail extends StatelessWidget {
                 child: Image.network(xNotifier.currentFood.image != null
                     ? xNotifier.currentFood.image
                     : "https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc",
-                  width: 450,
-                  height: 450,
+                  width: 300,
+                  height: 300,
 
                 ),
               ),
