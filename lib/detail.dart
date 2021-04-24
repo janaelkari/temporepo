@@ -1,7 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appretry/missing.dart';
-import 'package:flutter_appretry/MissingList.dart';
 import 'package:flutter_appretry/missing_notifier.dart';
 
 class MissingDetail extends StatelessWidget {
