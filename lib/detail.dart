@@ -160,7 +160,7 @@ class _MissingDetailState extends State<MissingDetail> {
         animatedIcon: AnimatedIcons.list_view,
         children: [
           SpeedDialChild(
-            child: Icon(Icons.copy),
+            child: Icon(Icons.content_copy),
             label: "Copy Mobile Number",
             labelBackgroundColor: Colors.red,
             labelStyle: TextStyle(color: Colors.white, fontSize: 16),

@@ -40,12 +40,11 @@ class _AboutScreenState extends State<AboutScreen> {
                               padding: EdgeInsets.only(top: 20.0, left: 10, right: 10,),
 
                             child: Text(
-                                'The main problem is that many people go missing or lost for unknown reasons in various Lebanese districts.This apps role is to spread information about the missing people through connections between seekers and trackers which raises the probability of finding the missing person.',
-
+                                'Our project is a simple application intended to search for missing people in a certain geological area (The application is specifically designed for Lebanon). It is an application that both the seeker and finder of the missing person are capable of using. One of the problems that Lebanese people face nowadays during these harsh circumstances is that many people go missing for unknown reasons in various Lebanese districts. This applications role is to spread information about the missing people through connecting the seekers and the trackers (finders), thus, raising the probability of finding the missing person. Creating an account is an easy procedure for seekers and finders, it requires them to input their email and password for registration, later they can log in to this account. The seeker is asked to add the missing persons information (full name, age, city, address, description, reward, and an image of the missing person) as well as his/her own phone number. Second, if the missing person was spotted, the finder will contact the seeker on his/her phone number. If the seeker specified a reward for finding the missing person, then the finder will receive the reward. ',
                               textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 25,
+                                  fontSize: 20,
 
                                 ),
                               ),
