@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appretry/missing.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +34,13 @@ class _PeopleState extends State<MissingList> {
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 leading: Image.network(
-                    xNotifier.missingList[index].image != null
-                        ? xNotifier.missingList[index].image
-                        : "https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc"
-
-                    ),
+                  xNotifier.missingList[index].image != null
+                      ? xNotifier.missingList[index].image
+                      : "https://i.picsum.photos/id/832/200/300.jpg?hmac=6gMt7WeRsS41_901ujRTrOgfwtW9MBZ375g8qXO3LUc",
+                  height: 60,
+                  width: 40,
+                  fit: BoxFit.fill,
+                ),
                 title: Text(xNotifier.missingList[index].name),
                 subtitle: Text(xNotifier.missingList[index].city),
                 onTap: () {
@@ -70,8 +73,9 @@ Future<void> getpeople(Notifier xNotifier) async {
 
   snapshot.documents.forEach((document) {
     //traverse the document
+
     missing p = missing.fromMap(document
-        .data); //doc.data is a map //transformed this doc to the missing class obj
+        .data,docId: document.documentID); //doc.data is a map //transformed this doc to the missing class obj
     //data is the json file (fields of the doc)
     _pList.add(p);
   });

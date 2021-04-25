@@ -21,6 +21,7 @@ class _Add_missingState extends State<Add_missing> {
   String ls;
   File imageFile;
   String Filename;
+  String status;
 
   _openGallery(BuildContext context) async {
     var picture = await ImagePicker.pickImage(source: ImageSource.gallery,maxHeight:500,maxWidth: 500);
@@ -138,8 +139,13 @@ class _Add_missingState extends State<Add_missing> {
                         phone = value;
                       },
                       decoration: new InputDecoration(
-                        prefixIcon: Icon(Icons.phone),
-
+                        prefix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.phone),
+                            Text("(+961)")
+                          ],
+                        ),
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
                             borderRadius: BorderRadius.circular(15)),
@@ -246,6 +252,7 @@ class _Add_missingState extends State<Add_missing> {
                               'city': city,
                               'lastseen': ls,
                               'reward': reward,
+                              'status': status,
                             });
                             submitted(context);
 
